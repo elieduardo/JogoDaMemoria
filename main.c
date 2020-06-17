@@ -5,10 +5,13 @@
 #include "Arquivos.h"
 #include "Jogo.h"
 
-//Criação da struct
+/*
+Criação da struct que guardará 
+os dados do jogador
+*/
 struct jogador{
-		char nome[20];
-		int  acertos;
+	char nome[20];
+	int  acertos;
 };
 
 int main(int argc, char *argv[]) {
@@ -16,6 +19,7 @@ int main(int argc, char *argv[]) {
 	jgdor = &Jogador;
 	
 	int opcao;
+	char arquivoDificuldade;
 	FILE *pont_regras;
 	char texto_str[200];	
 	
@@ -91,6 +95,7 @@ int main(int argc, char *argv[]) {
 				break;
 				
 			case 2:
+				system ("cls");
 				//Abre arquivo das regras
 				pont_regras = fopen("regras.txt", "r");
 				
@@ -105,8 +110,18 @@ int main(int argc, char *argv[]) {
 				break;
 			
 			case 3:
+				system ("cls");
 				//Chamada da função para jogador cadastrar as palavras
-				cadastrarPalavras();
+				printf("Voce deseja adicionar palavras para qual dificuldade: \n");
+				printf("(1) Facil\n(2) Medio\n(3) Dificil\n");
+				scanf("%d", &arquivoDificuldade);
+				if(arquivoDificuldade == 1){
+					cadastrarPalavrasFacil();
+				}else if(arquivoDificuldade == 2){
+					cadastrarPalavrasMedio();
+				}else if(arquivoDificuldade == 3){
+					cadastrarPalavrasDificil();
+				}
 				break;
 			case 0: 
 				//Fecha o jogo

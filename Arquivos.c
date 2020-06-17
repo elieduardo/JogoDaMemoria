@@ -4,11 +4,22 @@
 #include "Jogo.h"
 
 
-//Variáveis Globais
+/*
+*Variáveis Globais
+*/
 char palavra[5][20];
 char resposta[5][20];
+//Variável que captura a palavra cadastrada
+char novapalavra[20];
 
-//Função conta quantas palavras existem no arquivo txt
+/*
+Objetivo: contar o numero de palavras existente.
+Verifica se encontrou o arquivo, caso contrario
+ele sai da função.
+Executado um loop que vai verificar char por char
+e a cada char ' ' ou '\n' adiciona +1 na variável da contagem.
+No fim, ele fecha o arquivo e retorna a contagem de palavras.
+*/
 int contagemPalavras(char arquivo[15]){
 	char c;
 	FILE *fp;
@@ -48,7 +59,16 @@ int contagemPalavras(char arquivo[15]){
 	return count;
 }
 
-//Função que sorteia 5 palavras do arquivo txt
+/*
+Objetivo:sortear 5 palavras do arquivo txt
+Primeiro há a verificação se o arquivo existe.
+Criado uma variavel do tipo int que será o retorno da função contagemPalavras,
+este função retornará o numero de palavras no arquivo.
+Após isso, cria um gerador numérico randomico com limite do numero de palavras.
+Este gerador randomico serve para escolher aleatoriamente 5 palavras 
+que estejam no arquivo.
+
+*/
 void sorteioPalavras(int i, char arquivo[15]){
 	FILE* f;		
 	
@@ -66,7 +86,7 @@ void sorteioPalavras(int i, char arquivo[15]){
 	//srand(time(NULL));
 	int randomico = rand() % qtddepalavras;
 
-
+	//Imprime na tela a palavras escolhidas randomicamente
 	for(int j = 0; j <= randomico; j++) {
 		fscanf(f, "%s", palavra[i]);
 	}
@@ -75,18 +95,67 @@ void sorteioPalavras(int i, char arquivo[15]){
 	fclose(f);	
 }
 
-void cadastrarPalavras(){
+/*
+Objetivo: cadastrar palavra informada pelo jogador no arquivo txt
+Input da palavra.
+Atribui palavra no arquivo.
+Pergunta se usuario deseja adicionar outra palavra.
+*/
+void cadastrarPalavrasFacil(){
 	
-	//Variável que captura a palavra cadastrada
-	char novapalavra[20];
-
+	//Verifica se arquivo existe
+	FILE* f;
+	f = fopen("facil.txt", "r+");
+	if(f == 0) {
+		printf("Banco de dados de palavras não disponível\n\n");
+		exit(1);
+	}
+	
 	printf("Digite a nova palavra, em letras maiúsculas: ");
 	scanf("%s", novapalavra);
+	
+	
+	//Atribui a palavra no arquivo 
+	int qtd;
+	fscanf(f, "%d", &qtd);
+	qtd++;
+	fseek(f, 0, SEEK_SET);
+	fprintf(f, "%d", qtd);
 
+	fseek(f, 0, SEEK_END);
+	fprintf(f, "\n%s", novapalavra);
+
+	//Fecha arquivo
+	fclose(f);
+					
+	char ask = 'S';
+	
+	//Pergunta se jogador deseja cadastrar outra palavra
+	printf("Você gostaria de cadastrar outra palavra? (S/N)");
+	scanf(" %c", &ask);
+	
+	//Verifica resposta
+	if(ask == 'S') {			
+		cadastrarPalavrasFacil();
+	}else{
+		exit(1);
+	}		
+}
+
+/*
+Objetivo: cadastrar palavra informada pelo jogador no arquivo txt
+Input da palavra.
+Atribui palavra no arquivo.
+Pergunta se usuario deseja adicionar outra palavra.
+*/
+void cadastrarPalavrasMedio(){
+	
+	printf("Digite a nova palavra, em letras maiúsculas: ");
+	scanf("%s", novapalavra);
 	FILE* f;
-
+	
 	//Verifica se arquivo existe
-	f = fopen("teste.txt", "r+");
+	f = fopen("medio.txt", "r+");
 	if(f == 0) {
 		printf("Banco de dados de palavras não disponível\n\n");
 		exit(1);
@@ -104,7 +173,7 @@ void cadastrarPalavras(){
 
 	//Fecha arquivo
 	fclose(f);
-						
+					
 	char ask = 'S';
 	
 	//Pergunta se jogador deseja cadastrar outra palavra
@@ -113,11 +182,56 @@ void cadastrarPalavras(){
 	
 	//Verifica resposta
 	if(ask == 'S') {			
-		cadastrarPalavras();
+		cadastrarPalavrasMedio();
 	}else{
 		exit(1);
 	}
 }
 
+/*
+Objetivo: cadastrar palavra informada pelo jogador no arquivo txt
+Input da palavra.
+Atribui palavra no arquivo.
+Pergunta se usuario deseja adicionar outra palavra.
+*/
+void cadastrarPalavrasDificil(){
+	
+	printf("Digite a nova palavra: ");
+	scanf("%s", novapalavra);
+	FILE* f;
+	
+	//Verifica se arquivo existe
+	f = fopen("dificil.txt", "r+");
+	if(f == 0) {
+		printf("Banco de dados de palavras não disponível\n\n");
+		exit(1);
+	}
+
+	//Atribui a palavra no arquivo 
+	int qtd;
+	fscanf(f, "%d", &qtd);
+	qtd++;
+	fseek(f, 0, SEEK_SET);
+	fprintf(f, "%d", qtd);
+
+	fseek(f, 0, SEEK_END);
+	fprintf(f, "\n%s", novapalavra);
+
+	//Fecha arquivo
+	fclose(f);
+					
+	char ask = 'S';
+	
+	//Pergunta se jogador deseja cadastrar outra palavra
+	printf("Você gostaria de cadastrar outra palavra? (S/N)");
+	scanf(" %c", &ask);
+	
+	//Verifica resposta
+	if(ask == 'S') {			
+		cadastrarPalavrasFacil();
+	}else{
+		exit(1);
+	}
+}
 
 

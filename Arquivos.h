@@ -3,6 +3,8 @@
 
 void sorteioPalavras(int i, char arquivo[15]);
 int contagemPalavras(char arquivo[15]);
-void cadastrarPalavras();
+void cadastrarPalavrasFacil();
+void cadastrarPalavrasMedio();
+void cadastrarPalavrasDificil();
 #endif 
 

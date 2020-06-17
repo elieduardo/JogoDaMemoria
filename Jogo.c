@@ -4,18 +4,22 @@
 #include <unistd.h>
 #include <time.h>
 
-
 //Variáveis Globais
+int dificuldade;
 char palavra[5][20];
 char resposta[5][20];
 
 //Criação da struct
 struct jogador{
-		char nome[20];
-		int  acertos;
+	char nome[20];
+	int  acertos;
 };
 
-//Função utilizada como um cronometro de 5 segundos
+/*
+Objetivo: cronometro
+Inteiro recebido no parametro será o numero de 
+segundos que o programa irá "travar"
+*/
 void cronometro (int segundos)
 {
   clock_t fimtempo;
@@ -24,7 +28,11 @@ void cronometro (int segundos)
 }
 
 
-//Imprime as palavras na tela e roda o cronometro de 5 segundos
+/*
+Objetivo: Imprime na tela as 5 palavras randomicamente escolhidas.
+Irá imprimir 5 palavras e depois chamará a função cronometro
+que dara tempo ao jogador para decorar essas palavras.
+*/
 void mostraPalavras(int tempo){	
 	// j recebe o valor do tempo
 	int j= tempo;	
@@ -41,7 +49,11 @@ void mostraPalavras(int tempo){
 }
 
 
-//Pede input do jogador
+/*
+Objetivo: pede o input das palavras.
+Depois de mostrado as 5 palavras, esta função será 
+chamada para obter a resposta do jogador.
+*/
 void pedePalavras(){
 	system ("cls");
 	printf ("Informe as palavras que foram exibidos\n\n");
@@ -52,7 +64,12 @@ void pedePalavras(){
 	}
 }
 
-
+/*
+Objetivo: verifica numero de acertos do jogador e imprime 
+sentença correspondente ao numero de acertos.
+Verifica acertos e imprime resposta com switch case e depois
+pede se jogador deseja voltar ao menu ou sair do jogo.
+*/
 void verificaGanhador(int acertos, char nome[20]){
 	int opc;
 	
@@ -91,6 +108,11 @@ void verificaGanhador(int acertos, char nome[20]){
 	}
 }
 
+/*
+Objetivo: verificar input do jogador.
+Utilizando função que compara duas strings, esta função ira comparar 
+a resposta do jogador com a palavra mostrada.
+*/
 int verificaPalavras(){
 	int aux = 0;
 	for(int i = 0; i <= 4; i ++){
